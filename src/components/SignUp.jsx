@@ -22,6 +22,17 @@ const useStyles = makeStyles({
 
     '& .MuiLink-underlineHover': {
         marginRight: '5px'
+    },
+
+    '& .MuiTypography-h6': {
+          display: 'flex',
+          justifyContent: 'space-between'
+    },
+    '& .MuiDialog-paperWidthSm': {
+          maxHeight: '605px'
+    },
+    '& .DatePickers-container-64': {
+      paddingBottom: '20px'
     }
   },
   img: {
@@ -42,14 +53,25 @@ export default function SignUp(props) {
   const classes = useStyles();
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby='form-dialog-title'>
-      <DialogTitle align='center'>
+    <Dialog open={open} onClose={onClose} aria-labelledby='form-dialog-title' className={classes.root}>
+      <DialogTitle>
+        <div>
+
+        </div>
+        <div>
         <img src={twitter} alt='twitter' className={classes.img} />
+        </div>
+        <div>
+        <Button onClick={onClose} variant='contained' style={{backgroundColor: '#1b88c7', color: 'white'}}>
+          Next
+        </Button>
+        </div>
+
       </DialogTitle>
 
       <DialogContent>
         <DialogContentText>
-          <h2>
+          <h2 style={{color: 'black'}}>
             <b>Create Your Account</b>{' '}
           </h2>
         </DialogContentText>
@@ -73,7 +95,7 @@ export default function SignUp(props) {
           <p style={{color: '#1b88c7'}}>Use email instead</p>
           </div>
           <DialogContentText>
-            <p>
+            <p style={{color: 'black'}}>
               <b>Date of birth </b>
               <br />
               This will not be shown publicly. Confirm your own age, even if
@@ -83,14 +105,7 @@ export default function SignUp(props) {
           <DatePickers />
         </form>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} variant='contained' color='secondary'>
-          Cancel
-        </Button>
-        <Button onClick={onClose} variant='contained' color='primary'>
-          Next
-        </Button>
-      </DialogActions>
+ 
     </Dialog>
   );
 }

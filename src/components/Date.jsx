@@ -70,11 +70,11 @@ class DatePickers extends Component {
       return filteredYears;
     }
     const styles = {
-      paddingRight: '120px !important',
+      paddingBottom: '20px !important',
     };
     return (
-      <form className={classes.container} noValidate>
-        <Grid container spacing={2}>
+      <form className={classes.container, classes.styles} noValidate>
+        <Grid container spacing={2} style={{paddingBottom: '20px'}}>
           <Grid item xs={6}>
             <FormControl variant='outlined' fullWidth>
               <InputLabel htmlFor='outlined-age-native-simple'>
@@ -82,7 +82,7 @@ class DatePickers extends Component {
               </InputLabel>
 
               <Select
-                className={styles}
+                // className={styles}
                 id='demo-simple-select'
                 label='month'
                 value={this.state.month}
@@ -98,7 +98,7 @@ class DatePickers extends Component {
 
               <Select
                 fullWidth
-                className={styles}
+                // className={styles}
                 id='demo-simple-select'
                 label='day'
                 variant='outlined'
