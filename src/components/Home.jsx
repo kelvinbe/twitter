@@ -26,6 +26,9 @@ class Home extends Component {
     console.log('We are in here');
     this.setState({isLoading: false})
   }
+  nextPath(path) {
+    this.props.history.push(path)
+  }
 
   handleClose = () => {
     this.setState({ open: false });
@@ -42,9 +45,7 @@ class Home extends Component {
     };
     const { classes } = this.props;
 
-  const  navigateToLogin = () => {
-      return <Login />
-    }
+
 
     return (
       <div>
@@ -76,7 +77,7 @@ class Home extends Component {
                 </Button>
               </div>
               <div>
-                <Button color='secondary' className={classes.login} onClick={this.navigateToLogin}>
+                <Button color='secondary' className={classes.login} onClick={() => this.nextPath('/login')}>
                   Log in
                 </Button>
 
