@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import twitter from '../assests/twitter.png';
 import { DialogTitle } from '@material-ui/core';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles({
 });
 
 export default function SignUp(props) {
-  const { onClose, open } = props;
+  const { onClose, open, handlePassword, handleName, handlePhone, handleSignUp } = props;
 
   const classes = useStyles();
 
@@ -62,8 +63,8 @@ export default function SignUp(props) {
         <img src={twitter} alt='twitter' className={classes.img} />
         </div>
         <div>
-        <Button onClick={onClose} variant='contained' style={{backgroundColor: '#1b88c7', color: 'white'}}>
-          Next
+        <Button onClick={onClose} onClick={handleSignUp} variant='contained' style={{backgroundColor: '#1b88c7', color: 'white'}}>
+          Sign Up
         </Button>
         </div>
 
@@ -80,6 +81,7 @@ export default function SignUp(props) {
             fullWidth
             id='outlined-helperText'
             label='Name'
+            onChange={handleName}
             variant='outlined'
           />
         
@@ -89,6 +91,18 @@ export default function SignUp(props) {
             className={classes.root}
             label='Phone'
             id='outlined-helperText'
+            onChange={handlePhone}
+            variant='outlined'
+          />
+
+      <TextField
+          style = {{marginTop: '20px', marginBottom: '30px'}}
+            fullWidth
+            className={classes.root}
+            label='Passoword'
+            id='outlined-helperText'
+            type={'password'}
+            onChange={handlePassword}
             variant='outlined'
           />
           <div>

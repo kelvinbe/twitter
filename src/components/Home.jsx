@@ -12,19 +12,29 @@ import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Login from './Login';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import axios from 'axios'
+
+
+const api = axios.create({
+  baseURL: `http://127.0.0.1:8000/`,
+});
 
 
 class Home extends Component {
   state = {
     open: false,
-    isLoading: false
+    isLoading: false,
+    name: '',
+    phone: '',
+    month: '',
+    year: '',
+    day: '',
+    password: '',
+    isSignedUp: false
   };
 
   handleClickOpen() {
-    this.setState({isLoading: true})
     this.setState({ open: true });
-    console.log('We are in here');
-    this.setState({isLoading: false})
   }
   nextPath(path) {
     this.props.history.push(path)
@@ -33,6 +43,57 @@ class Home extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleName = (e) => {
+    this.setState({name: e.target.value})
+    console.log(this.state.name)
+  }
+
+  handlePhone = (e) => {
+    this.setState({phone: e.target.value})
+  }
+
+  handleMonth = (e) =>{
+    this.setState({month: e.target.value})
+  }
+
+  handleDay(e) {
+    this.setState({day: e.target.value})
+  }
+
+  handlePassword =(e) => {
+    this.setState({password: e.target.value})
+  }
+
+  handleYear(e) {
+    this.setState({year: e.target.value})
+  }
+
+  nextPath(path) {
+    this.props.history.push(path)
+  }
+
+handleSignUp = (e) =>{
+    const name = this.state.name
+    const password = this.state.password
+    const phone = this.state.phone
+
+  api.post('api/auth/register', {
+      name, password, phone
+  })
+  .then(res => {
+    if(res.status === 201){
+      alert('You have been signed up')
+      this.setState({isSignedUp: true})
+      if(this.state.isSignedUp){
+        this.nextPath('/login')
+      }
+    }
+
+
+  })
+
+}
 
   render() {
     const style = {
@@ -85,7 +146,7 @@ class Home extends Component {
               </div>
               {this.state.open && (
                 <div>
-                  <SignUp onClose={this.handleClose} open={this.state.open}/>
+                  <SignUp handleSignUp={this.handleSignUp}   handleName={this.handleName} handlePassword={this.handlePassword}  handlePhone = {this.handlePhone} onClose={this.handleClose} open={this.state.open}/>
                 </div>
               )}
            

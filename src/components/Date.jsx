@@ -49,7 +49,6 @@ class DatePickers extends Component {
       for (let i = 1; i <= 31; i++) {
         days.push(i);
       }
-      console.log(days);
 
       const filteredDays = days.map((day, i) => {
         return <MenuItem value={i}>{day}</MenuItem>;
