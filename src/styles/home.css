@@ -1,0 +1,19 @@
+.twitter-logo {
+    width: 50px;
+}
+
+.twit-logo {
+    width: 700px;
+    height: 600px;
+
+}
+.object-fit {
+    object-fit: fill;
+}
+
+.button-home {
+    border-radius: 20px !important;
+    height: 51px !important;
+    padding-left: 240px !important;
+}
+
