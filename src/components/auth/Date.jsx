@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputBase from '@material-ui/core/InputBase';
 import { render } from '@testing-library/react';
-import theme from './date.styles';
+import theme from '../date.styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 
@@ -29,20 +29,26 @@ class DatePickers extends Component {
       'December',
     ];
     const days = [];
-    const { classes } = this.props;
+    const { classes, handleMonth, handleDay, handleYear } = this.props;
     const handleMonthChange = (event) => {
       this.setState({ month: event.target.value });
+      handleMonth(event.target.value)
     };
+
     const handleDayChange = (event) => {
       this.setState({ day: event.target.value });
+      handleDay(event.target.value)
     };
 
     const handleYearChange = (event) => {
       this.setState({ year: event.target.value });
+      handleYear(event.target.value)
+      console.log(this.state.year)
     };
 
+
     const displayMonths = months.map((month, i) => {
-      return <MenuItem value={i}>{month}</MenuItem>;
+      return <MenuItem value={i+1}>{month}</MenuItem>;
     });
 
     const displayDays = () => {
@@ -51,7 +57,7 @@ class DatePickers extends Component {
       }
 
       const filteredDays = days.map((day, i) => {
-        return <MenuItem value={i}>{day}</MenuItem>;
+        return <MenuItem value={i+1}>{day}</MenuItem>;
       });
       return filteredDays;
     };
@@ -63,8 +69,8 @@ class DatePickers extends Component {
       for (let i = max; i >= min; i--) {
         years.push(i);
       }
-      const filteredYears = years.map((year, i) => {
-        return <MenuItem value={i}>{year}</MenuItem>;
+      const filteredYears = years.map((year) => {
+        return <MenuItem value={year}>{year}</MenuItem>;
       });
       return filteredYears;
     }

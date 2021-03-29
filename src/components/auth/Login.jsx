@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import twitter from '../assests/twitter.png';
+import twitter from '../../assests/twitter.png';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import styles from './login.styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import api from '../../api'
 
-const api = axios.create({
-  baseURL: `http://127.0.0.1:8000/`,
-});
+
 
 class Login extends Component {
   componentDidMount() {

@@ -2,23 +2,17 @@ import React, { Component } from 'react';
 import twitter from '../assests/twitter.png';
 import twit from '../assests/twit.jpg';
 import down from '../assests/download.png';
-
 import '../styles/home.css';
 import Button from '@material-ui/core/Button';
 import HomeFooter from './HomeFooter';
-import SignUp from './SignUp';
+import SignUp from './auth/SignUp';
 import styles from './home.styles';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import Login from './Login';
+import Login from './auth/Login';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from 'axios'
-
-
-const api = axios.create({
-  baseURL: `http://127.0.0.1:8000/`,
-});
-
+import api from '../api';
+import moment from 'moment';
 
 class Home extends Component {
   state = {
@@ -26,18 +20,18 @@ class Home extends Component {
     isLoading: false,
     name: '',
     phone: '',
+    password: '',
     month: '',
     year: '',
     day: '',
-    password: '',
-    isSignedUp: false
+    isSignedUp: false,
   };
 
   handleClickOpen() {
     this.setState({ open: true });
   }
   nextPath(path) {
-    this.props.history.push(path)
+    this.props.history.push(path);
   }
 
   handleClose = () => {
@@ -45,55 +39,69 @@ class Home extends Component {
   };
 
   handleName = (e) => {
-    this.setState({name: e.target.value})
-    console.log(this.state.name)
-  }
+    this.setState({ name: e.target.value });
+    console.log(this.state.name);
+  };
 
   handlePhone = (e) => {
-    this.setState({phone: e.target.value})
+    this.setState({ phone: e.target.value });
+  };
+
+  handlePassword = (e) => {
+    this.setState({ password: e.target.value });
+  };
+
+
+  handleMonthChange = (month) => {
+    this.setState({month})
+    console.log(month)
   }
 
-  handleMonth = (e) =>{
-    this.setState({month: e.target.value})
+  handleYearChange = (year) => {
+    this.setState({year})
+    console.log(year)
+
   }
 
-  handleDay(e) {
-    this.setState({day: e.target.value})
+  handleDayChange = (day) => {
+    this.setState({day})
+    console.log(day)
   }
 
-  handlePassword =(e) => {
-    this.setState({password: e.target.value})
-  }
-
-  handleYear(e) {
-    this.setState({year: e.target.value})
-  }
 
   nextPath(path) {
-    this.props.history.push(path)
+    this.props.history.push(path);
   }
 
-handleSignUp = (e) =>{
-    const name = this.state.name
-    const password = this.state.password
-    const phone = this.state.phone
+  handleSignUp = (e) => {
+    const name = this.state.name;
+    const password = this.state.password;
+    const phone = this.state.phone;
+    const dob = moment();
+    dob.year(this.state.year);
+    dob.month(this.state.month);
+    dob.day(this.state.day);
+    const dobString = dob.format('YYYY-MM-DD');
+    console.log(dobString);
+    console.log(this.state.year);
 
-  api.post('api/auth/register', {
-      name, password, phone
-  })
-  .then(res => {
-    if(res.status === 201){
-      alert('You have been signed up')
-      this.setState({isSignedUp: true})
-      if(this.state.isSignedUp){
-        this.nextPath('/login')
-      }
-    }
-
-
-  })
-
-}
+    api
+      .post('api/auth/register', {
+        name,
+        password,
+        phone,
+        date_of_birth: dobString,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          alert('You have been signed up');
+          this.setState({ isSignedUp: true });
+          if (this.state.isSignedUp) {
+            this.nextPath('/login');
+          }
+        }
+      });
+  };
 
   render() {
     const style = {
@@ -105,8 +113,6 @@ handleSignUp = (e) =>{
       paddingTop: '10px',
     };
     const { classes } = this.props;
-
-
 
     return (
       <div>
@@ -125,9 +131,11 @@ handleSignUp = (e) =>{
               <h2 style={{ fontSize: '40px' }}>Join Twitter today.</h2>
             </div>
             <div className={classes.buttonParent}>
-           {this.state.isLoading && <div>
-                <CircularProgress />
-              </div>}
+              {this.state.isLoading && (
+                <div>
+                  <CircularProgress />
+                </div>
+              )}
               <div>
                 <Button
                   variant='contained'
@@ -138,19 +146,29 @@ handleSignUp = (e) =>{
                 </Button>
               </div>
               <div>
-                <Button color='secondary' className={classes.login} onClick={() => this.nextPath('/login')}>
+                <Button
+                  color='secondary'
+                  className={classes.login}
+                  onClick={() => this.nextPath('/login')}
+                >
                   Log in
                 </Button>
-
-  
               </div>
               {this.state.open && (
                 <div>
-                  <SignUp handleSignUp={this.handleSignUp}   handleName={this.handleName} handlePassword={this.handlePassword}  handlePhone = {this.handlePhone} onClose={this.handleClose} open={this.state.open}/>
+                  <SignUp
+                    handleYearChange = {this.handleYearChange}
+                    handleDayChange = {this.handleDayChange}
+                    handleMonthChange ={this.handleMonthChange}
+                    handleSignUp={this.handleSignUp}
+                    handleName={this.handleName}
+                    handlePassword={this.handlePassword}
+                    handlePhone={this.handlePhone}
+                    onClose={this.handleClose}
+                    open={this.state.open}
+                  />
                 </div>
               )}
-           
-
             </div>
           </div>
         </div>

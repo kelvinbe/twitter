@@ -1,8 +1,8 @@
 import './App.css';
 import Home from './components/Home'
 import {Route,Switch} from 'react-router-dom'
-import Login from './components/Login'
-import TweetPage from './components/TweetPage'
+import Login from './components/auth/Login'
+import TweetPage from './components/tweetpage/TweetPage'
 import {withRouter} from 'react-router-dom';
 
 

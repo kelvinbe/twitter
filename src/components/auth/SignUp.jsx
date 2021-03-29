@@ -9,9 +9,11 @@ import DatePickers from './Date';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import twitter from '../assests/twitter.png';
+import twitter from '../../assests/twitter.png';
 import { DialogTitle } from '@material-ui/core';
 import axios from 'axios';
+import Toolbar from '@material-ui/core/Toolbar';
+
 
 const useStyles = makeStyles({
   root: {
@@ -22,19 +24,19 @@ const useStyles = makeStyles({
     },
 
     '& .MuiLink-underlineHover': {
-        marginRight: '5px'
+      marginRight: '5px',
     },
 
     '& .MuiTypography-h6': {
-          display: 'flex',
-          justifyContent: 'space-between'
+      display: 'flex',
+      justifyContent: 'space-between',
     },
     '& .MuiDialog-paperWidthSm': {
-          maxHeight: '605px'
+      maxHeight: '605px',
     },
     '& .DatePickers-container-64': {
-      paddingBottom: '20px'
-    }
+      paddingBottom: '20px',
+    },
   },
   img: {
     width: '35px;',
@@ -42,51 +44,69 @@ const useStyles = makeStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
-  }, a: {
-    paddingLeft: 'none'
-  }
+    justifyContent: 'space-between',
+  },
+  a: {
+    paddingLeft: 'none',
+  },
 });
 
 export default function SignUp(props) {
-  const { onClose, open, handlePassword, handleName, handlePhone, handleSignUp } = props;
+  const {
+    onClose,
+    open,
+    handlePassword,
+    handleName,
+    handlePhone,
+    handleSignUp,
+    handleMonthChange,
+    handleYearChange,
+    handleDayChange
+  } = props;
 
   const classes = useStyles();
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby='form-dialog-title' className={classes.root}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby='form-dialog-title'
+      className={classes.root}
+    >
       <DialogTitle>
+        <div></div>
         <div>
-
+          <img src={twitter} alt='twitter' className={classes.img} />
         </div>
         <div>
-        <img src={twitter} alt='twitter' className={classes.img} />
+          <Button
+            onClick={onClose}
+            onClick={handleSignUp}
+            variant='contained'
+            style={{ backgroundColor: '#1b88c7', color: 'white' }}
+          >
+            Sign Up
+          </Button>
         </div>
-        <div>
-        <Button onClick={onClose} onClick={handleSignUp} variant='contained' style={{backgroundColor: '#1b88c7', color: 'white'}}>
-          Sign Up
-        </Button>
-        </div>
-
       </DialogTitle>
 
       <DialogContent>
         <DialogContentText>
-          <h2 style={{color: 'black'}}>
+          <h2 style={{ color: 'black' }}>
             <b>Create Your Account</b>{' '}
           </h2>
         </DialogContentText>
         <form className={classes.form}>
-            <TextField
+          <TextField
             fullWidth
             id='outlined-helperText'
             label='Name'
             onChange={handleName}
             variant='outlined'
           />
-        
+
           <TextField
-          style = {{marginTop: '20px', marginBottom: '30px'}}
+            style={{ marginTop: '20px', marginBottom: '30px' }}
             fullWidth
             className={classes.root}
             label='Phone'
@@ -95,8 +115,8 @@ export default function SignUp(props) {
             variant='outlined'
           />
 
-      <TextField
-          style = {{marginTop: '20px', marginBottom: '30px'}}
+          <TextField
+            style={{ marginTop: '20px', marginBottom: '30px' }}
             fullWidth
             className={classes.root}
             label='Passoword'
@@ -106,20 +126,23 @@ export default function SignUp(props) {
             variant='outlined'
           />
           <div>
-          <p style={{color: '#1b88c7'}}>Use email instead</p>
+            <p style={{ color: '#1b88c7' }}>Use email instead</p>
           </div>
           <DialogContentText>
-            <p style={{color: 'black'}}>
+            <p style={{ color: 'black' }}>
               <b>Date of birth </b>
               <br />
               This will not be shown publicly. Confirm your own age, even if
               this account is for a business, a pet, or something else.
             </p>
           </DialogContentText>
-          <DatePickers />
+          <DatePickers
+            handleMonth={handleMonthChange}
+            handleDay={handleDayChange}
+            handleYear={handleYearChange}
+          />
         </form>
       </DialogContent>
- 
     </Dialog>
   );
 }
