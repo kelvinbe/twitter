@@ -40,7 +40,6 @@ class Home extends Component {
 
   handleName = (e) => {
     this.setState({ name: e.target.value });
-    console.log(this.state.name);
   };
 
   handlePhone = (e) => {
@@ -54,18 +53,15 @@ class Home extends Component {
 
   handleMonthChange = (month) => {
     this.setState({month})
-    console.log(month)
   }
 
   handleYearChange = (year) => {
     this.setState({year})
-    console.log(year)
 
   }
 
   handleDayChange = (day) => {
     this.setState({day})
-    console.log(day)
   }
 
 
@@ -82,8 +78,6 @@ class Home extends Component {
     dob.month(this.state.month);
     dob.day(this.state.day);
     const dobString = dob.format('YYYY-MM-DD');
-    console.log(dobString);
-    console.log(this.state.year);
 
     api
       .post('api/auth/register', {

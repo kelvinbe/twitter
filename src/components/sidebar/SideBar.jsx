@@ -16,7 +16,17 @@ import twitter from '../../assests/twitter.png';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-
+import profilee from '../../assests/profilepic.jpg';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 
 const style = {
@@ -29,13 +39,12 @@ const avatarStyles = {
   marginLeft: '90px',
   marginBlockStart: 'auto',
   background: 'hsl(240deg 7% 97%)',
-  borderRadius: '27px'
-
-}
+  borderRadius: '27px',
+};
 
 const avatarContent = {
-  marginLeft: '50px'
-}
+  marginLeft: '50px',
+};
 
 const drawerWidth = 340;
 
@@ -58,7 +67,17 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#c5dce8',
     },
     '& .MuiAvatar-img': {
-      objectFit: 'contain'
+      objectFit: 'contain',
+    },
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '34px',
+      paddingBottom: '10px'
+    },
+    '& .MuiTableRow-root': {
+      height: 73
+    },
+    '& .MuiTable-root': {
+      backgroundColor: 'whitesmoke'
     }
   },
   drawer: {
@@ -90,6 +109,10 @@ const useStyles = makeStyles((theme) => ({
   '& .MuiListItem-gutters': {
     paddingLeft: '100px',
   },
+
+  table: {
+    minWidth: 200,
+  }
 }));
 
 const drawer = (
@@ -164,8 +187,64 @@ const drawer = (
   </div>
 );
 
+const twitterSearch= [{ title: 'Try searching for people, topics, or keywords' }];
+
+
+
+
 const SideBar = (props) => {
   const classes = useStyles();
+  const drawer_two = (
+
+    <div>
+      <Autocomplete
+        freeSolo
+        options={twitterSearch.map((option) => option.title)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label='Search twitter'
+            margin='normal'
+            variant='outlined'
+          />
+        )}
+      />
+  
+      <TableContainer component={Paper}>
+        <Table className={classes.table}  aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              Trends For You
+            </TableCell>
+            <TableCell><SettingsIcon /></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Kikuyu</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Rila Odinga</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Fred ngatia</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Yaya Toure</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Show more</TableCell>
+          </TableRow>
+
+        </TableBody>
+        </Table>
+  
+      </TableContainer>
+    </div>
+  );
+
+
   const { window } = props;
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -175,6 +254,7 @@ const SideBar = (props) => {
         container={container}
         variant='permanent'
         open
+        anchor='left'
         classes={{
           paper: classes.drawerPaper,
           root: classes.root,
@@ -183,20 +263,29 @@ const SideBar = (props) => {
         {drawer}
         <div style={avatarStyles}>
           <span>
-          <Avatar alt="Remy Sharp" src={twitter} style={style}/>
- </span>
-          <span style={avatarContent}>
-          <Typography variant="h6">
-  kelvinbeno
-</Typography>
+            <Avatar alt='Remy Sharp' src={profilee} style={style} />
           </span>
           <span style={avatarContent}>
-            ...
+            <Typography variant='h6'>kelvinbeno</Typography>
           </span>
-      </div>
+          <span style={avatarContent}>...</span>
+        </div>
       </Drawer>
-
-      
+      <div>
+        <Drawer
+          key='Drawer2'
+          container={container}
+          variant='permanent'
+          open
+          anchor='right'
+          classes={{
+            paper: classes.drawerPaper,
+            root: classes.root,
+          }}
+        >
+          {drawer_two}
+        </Drawer>
+      </div>
     </div>
   );
 };

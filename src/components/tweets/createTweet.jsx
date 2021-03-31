@@ -1,13 +1,9 @@
 import React from 'react';
-import ReplyIcon from '@material-ui/icons/Reply';
-import ShareIcon from '@material-ui/icons/Share';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-import profile from '../../assests/profilepic.jpg';
 import TextField from '@material-ui/core/TextField';
 import { Divider } from '@material-ui/core';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
@@ -21,19 +17,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TopTweet from '../../assests/topTweets.png';
 import CardMedia from '@material-ui/core/CardMedia';
-import retweet from '../../assests/retweet.png';
-import SendIcon from '@material-ui/icons/Send';
+import profile from '../../assests/profilepic.jpg';
 
-const style = {
-  width: '26px',
-  color: 'lightgrey',
-};
 
 const icons = [
-  <ReplyIcon />,
-  <SendIcon />,
-  <FavoriteBorderIcon />,
-  <ShareIcon />,
+  <PermMediaIcon />,
+  <GifIcon />,
+  <PollIcon />,
+  <EmojiEmotionsIcon />,
+  <CalendarTodayIcon />,
 ];
 
 const renderIcons = () => {
@@ -42,7 +34,7 @@ const renderIcons = () => {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
       }}
     >
       {icons.map((icon, i) => (
@@ -52,9 +44,22 @@ const renderIcons = () => {
   );
 };
 
+const renderTweetButton = (onClick) => {
+  return (
+    <Button variant='contained' color='primary' onClick={onClick}>
+      Tweet
+    </Button>
+  );
+};
+
+const cardIconContent = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  paddingLeft: '59px',
+};
+
 const useStyles = makeStyles({
   root: {
-    paddingTop: '10px',
     '& .MuiListItem-root': {
       width: '0%',
       paddingTop: '0px',
@@ -65,7 +70,7 @@ const useStyles = makeStyles({
       paddingBottom: '0px',
     },
     '& .MuiSvgIcon-root': {
-      color: 'grey',
+      color: '#1b88c7',
     },
     '& .MuiButton-containedPrimary': {
       padding: '10px 12px',
@@ -79,28 +84,38 @@ const useStyles = makeStyles({
   },
 });
 
-const Tweet = (props) => {
-    const {tweets} = props
+const CreateTweet = (props) => {
+  const {tweetData, onChange, onClick} = props
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <Card>
-        <CardHeader title='name'></CardHeader>
+        <CardHeader title='Home'>
+          <CardMedia image={TopTweet} title='Contemplative Reptile' />
+        </CardHeader>
         <CardContent
           style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}
         >
           <Avatar alt='Remy Sharp' src={profile} />
 
-          <Typography style={{ marginLeft: '10px' }}>
-            {tweets}
-          </Typography>
+          <TextField
+            style={{ marginLeft: '10px' }}
+            label="What's happening?"
+            InputProps={{ disableUnderline: true }}
+            onChange={onChange}
+            value={tweetData}
+            fullWidth
+          ></TextField>
         </CardContent>
 
         <Divider />
-        <CardContent>{renderIcons()}</CardContent>
+        <CardContent style={cardIconContent}>
+          {renderIcons()}
+          {renderTweetButton(onClick)}
+        </CardContent>
       </Card>
     </div>
   );
 };
 
-export default Tweet;
+export default CreateTweet;
