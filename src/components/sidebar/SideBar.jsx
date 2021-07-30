@@ -46,7 +46,7 @@ const avatarContent = {
   marginLeft: '50px',
 };
 
-const drawerWidth = 340;
+const drawerWidth = 343;
 
 const useStyles = makeStyles((theme) => ({
   root: {

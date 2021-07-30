@@ -81,6 +81,11 @@ const useStyles = makeStyles({
     '& .MuiAvatar-img': {
       objectFit: 'contain',
     },
+    '& .MuiCard-root': {
+    maxWidth: '50%',
+    maxHeight: 232,
+    paddingLeft: '347px'
+    }
   },
 });
 

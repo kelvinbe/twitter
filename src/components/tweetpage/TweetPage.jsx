@@ -1,69 +1,76 @@
-import { Divider, makeStyles } from '@material-ui/core';
-import React, { Component } from 'react';
+import { Divider } from '@material-ui/core';
+import React from 'react';
 import SideBar from '../sidebar/SideBar';
-// import { makeStyles } from '@material-ui/core/styles';
 import './tweetPage.styles.js';
 import CreateTweet from '../tweets/createTweet';
 import Tweet from '../tweets/tweet';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './tweetPage.styles';
-import axios from 'axios';
-import api from '../../api';
+import firebase from "../../firebase";
+import { useState, useEffect } from 'react';
 
-class TweetPage extends Component {
-  state = {
-    newTweet: '',
-    tweets: [],
-  };
 
-  componentDidMount() {
-    api.get('tweets').then((res) => {
-      this.setState({ tweets: res.data });
-    });
+const TweetPage = () => {
+  const [tweets, setTweet] = useState([])
+  const ref = firebase.firestore().collection("tweet")
+  console.log('reffffff', ref)
+
+
+
+  function getTweets() {
+    ref.onSnapshot((querySnapShot) => {
+      const items = []
+      console.log('itemssss', items)
+      querySnapShot.forEach((doc) => {
+        items.push(doc.data())
+      })
+      setTweet(items)
+    })
   }
 
-  handleNewTweets(event) {
-    this.setState({ newTweet: event.target.value });
+  useEffect(() => {
+    getTweets()
+  }, [])
+
+  const handleTweetsList = () => {
+    const incomingTweets = tweets.map((tweet) => <Tweet tweets={tweet.tweet} key={tweet.id} />);
+    console.log('TweetsInHandleTweet', tweets)
+    return incomingTweets;
   }
 
-  handleTweetsList() {
-    const tweets = this.state.tweets.map((tweet) => {
-      return <Tweet tweets={tweet.tweet} key={tweet.id} />;
-    });
-    return tweets;
-  }
 
-  async postTweets() {
+
+
+  const postTweets = () => {
     const tweets = [...this.state.tweets]
     const tweet = this.state.newTweet;
-    const response = await api.post('tweets', {
-      tweet: tweet,
-    });
-    tweets.unshift(response.data)
     this.setState({tweets})
     
   }
 
-  render() {
-    const { classes } = this.props;
+ const handleNewTweets = (e) => {
+    setTweet({ newTweet: e.target.value });
+  }
 
     return (
-      <div className={classes.root}>
+      <div>
         <div>
           <SideBar />
         </div>
         <div>
           <CreateTweet
-            tweetData={this.state.newTweet}
-            onChange={this.handleNewTweets.bind(this)}
-            onClick={this.postTweets.bind(this)}
+            tweetData={tweets.tweet}
+            onChange={handleNewTweets}
+            onClick={postTweets}
           />
         </div>
         <Divider />
-        <div>{this.handleTweetsList()}</div>
+        <div>{handleTweetsList()}</div>
       </div>
     );
-  }
 }
+
+
+
 
 export default withStyles(styles)(TweetPage);
