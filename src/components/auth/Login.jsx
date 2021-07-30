@@ -12,7 +12,6 @@ import api from '../../api'
 class Login extends Component {
   componentDidMount() {
     // api.get('/').then(res => {
-    //   console.log(res.data)
     // })
   }
 
@@ -46,9 +45,7 @@ class Login extends Component {
     const password = this.state.password
     const phone = this.state.phone
 
-    console.log(name)
-    console.log(password)
-    console.log(phone)
+
 
     try{
         api.post('api/auth/login', {
@@ -62,7 +59,6 @@ class Login extends Component {
             if(this.state.isLoggedIn === true){
               this.nextPath('/tweetpage')
       
-                console.log('you logged in')
               }
           }
         })
@@ -70,7 +66,6 @@ class Login extends Component {
 
       }
       catch{
-        // console.log(err)
       }
 
 

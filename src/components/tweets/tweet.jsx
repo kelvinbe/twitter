@@ -1,89 +1,78 @@
-import React from 'react';
+import React, {Component} from 'react';
+import ReplyIcon from '@material-ui/icons/Reply';
+import ShareIcon from '@material-ui/icons/Share';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-import twitter from '../../assests/twitter.png';
-import TextField from '@material-ui/core/TextField';
+import profile from '../../assests/profilepic.jpg';
 import { Divider } from '@material-ui/core';
-import PermMediaIcon from '@material-ui/icons/PermMedia';
-import GifIcon from '@material-ui/icons/Gif';
-import PollIcon from '@material-ui/icons/Poll';
-import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { makeStyles } from '@material-ui/core/styles';
+import SendIcon from '@material-ui/icons/Send';
+import styles from './tweet.styles';
+import { withStyles } from '@material-ui/core/styles';
 
+
+const style = {
+  width: '26px',
+  color: 'lightgrey',
+};
 
 const icons = [
-  <PermMediaIcon />,
-  <GifIcon />,
-  <PollIcon />,
-  <EmojiEmotionsIcon />,
-  <CalendarTodayIcon />,
+  <ReplyIcon />,
+  <SendIcon />,
+  <FavoriteBorderIcon />,
+  <ShareIcon />,
 ];
 
 const renderIcons = () => {
-   return(     
-   <List style={{display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start'}}>
-         {  icons.map((icon, i) => (
-                <ListItem key={i}>
-                       {icon}
-                </ListItem>
-         ))}
-        </List>
-   )
-
-}
-
-
-const useStyles = makeStyles({
-    root:{
-            '& .MuiListItem-root': {
-                width: '0%',
-                paddingTop: '0px',
-                paddingBottom: '0px'
-
-            },
-            '& .MuiList-padding': {
-                paddingTop: '0px',
-                paddingBottom: '0px'
-            },
-            '& .MuiSvgIcon-root': {
-                color: '#1b88c7'
-            }
-    }
-})
-
-const Tweet = () => {
-    const classes = useStyles();
   return (
-      <div className={classes.root}>
-    <Card>
-      <CardHeader title='Home' />
-      <CardContent
-        style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}
-      >
-        <Avatar alt='Remy Sharp' src={twitter} />
-
-        <TextField
-          style={{ marginLeft: '10px' }}
-          label="What's happening?"
-        ></TextField>
-      </CardContent>
-
-      <Divider />
-      <CardContent style={{paddingLeft: '59px'}}>
-          {renderIcons()}
-      
-      </CardContent>
-    </Card>
-    </div>
+    <List
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      }}
+    >
+      {icons.map((icon, i) => (
+        <ListItem key={i}>{icon}</ListItem>
+      ))}
+    </List>
   );
 };
 
-export default Tweet;
+
+
+class Tweet extends Component {
+
+render(){
+const {classes, tweets} = this.props
+console.log('tweetsInTweet', tweets)
+console.log('classesss', classes)
+
+  
+  return (
+    <div className={classes.root}>
+      <Card>
+        <CardHeader title='name'></CardHeader>
+        <CardContent
+          style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}
+        >
+          <Avatar alt='Remy Sharp' src={profile} />
+
+          <p style={{ marginLeft: '10px' }}>
+            {tweets}
+          </p>
+        </CardContent>
+
+        <Divider />
+        <CardContent>{renderIcons()}</CardContent>
+      </Card>
+    </div>
+  );
+  }
+};
+
+export default withStyles(styles)(Tweet);

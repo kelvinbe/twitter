@@ -43,7 +43,6 @@ class DatePickers extends Component {
     const handleYearChange = (event) => {
       this.setState({ year: event.target.value });
       handleYear(event.target.value)
-      console.log(this.state.year)
     };
 
 
