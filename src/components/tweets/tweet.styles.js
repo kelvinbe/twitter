@@ -11,7 +11,8 @@ export default styles => ({
                 paddingBottom: '0px'
             },
             '& .MuiSvgIcon-root': {
-                color: '#1b88c7'
+                color: '#979b9d',
+                width: '17px'
             },
             '& .MuiCard-root': {
                 maxWidth: '50%',

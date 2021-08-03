@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -13,6 +13,7 @@ import twitter from '../../assests/twitter.png';
 import { DialogTitle } from '@material-ui/core';
 import axios from 'axios';
 import Toolbar from '@material-ui/core/Toolbar';
+import { useAuth } from './AuthContext';
 
 
 const useStyles = makeStyles({
@@ -58,13 +59,34 @@ export default function SignUp(props) {
     handlePassword,
     handleName,
     handlePhone,
-    handleSignUp,
     handleMonthChange,
     handleYearChange,
-    handleDayChange
+    handleDayChange,
+    password,
+    phone
   } = props;
 
   const classes = useStyles();
+
+  const { signup } = useAuth()
+  const [loading, setLoading] = useState(false)
+
+ const handleSignUp = async (e) => {
+   if(!password || !phone){
+    return alert('Missing fields!')
+   }
+  e.preventDefault()
+
+  try{
+    setLoading(true)
+   await signup(phone, password)
+
+  }catch{
+  }
+  setLoading(false)
+}
+
+
 
   return (
     <Dialog
@@ -80,7 +102,8 @@ export default function SignUp(props) {
         </div>
         <div>
           <Button
-            onClick={onClose}
+            disabled={loading}
+            onClose={onClose}
             onClick={handleSignUp}
             variant='contained'
             style={{ backgroundColor: '#1b88c7', color: 'white' }}

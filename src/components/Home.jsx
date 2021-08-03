@@ -14,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import api from '../api';
 import moment from 'moment';
 
+
 class Home extends Component {
   state = {
     open: false,
@@ -69,33 +70,10 @@ class Home extends Component {
     this.props.history.push(path);
   }
 
-  handleSignUp = (e) => {
-    const name = this.state.name;
-    const password = this.state.password;
-    const phone = this.state.phone;
-    const dob = moment();
-    dob.year(this.state.year);
-    dob.month(this.state.month);
-    dob.day(this.state.day);
-    const dobString = dob.format('YYYY-MM-DD');
 
-    api
-      .post('api/auth/register', {
-        name,
-        password,
-        phone,
-        date_of_birth: dobString,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          alert('You have been signed up');
-          this.setState({ isSignedUp: true });
-          if (this.state.isSignedUp) {
-            this.nextPath('/login');
-          }
-        }
-      });
-  };
+
+
+    
 
   render() {
     const style = {
@@ -107,6 +85,7 @@ class Home extends Component {
       paddingTop: '10px',
     };
     const { classes } = this.props;
+
 
     return (
       <div>
@@ -154,10 +133,11 @@ class Home extends Component {
                     handleYearChange = {this.handleYearChange}
                     handleDayChange = {this.handleDayChange}
                     handleMonthChange ={this.handleMonthChange}
-                    handleSignUp={this.handleSignUp}
                     handleName={this.handleName}
                     handlePassword={this.handlePassword}
                     handlePhone={this.handlePhone}
+                    phone={this.state.phone}
+                    password={this.state.password}
                     onClose={this.handleClose}
                     open={this.state.open}
                   />

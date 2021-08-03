@@ -27,6 +27,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import SettingsIcon from '@material-ui/icons/Settings';
+import TwitterChart from '../charts/apexChart';
+import { useState } from 'react';
+import { useAuth } from '../auth/AuthContext';
+
 
 
 const style = {
@@ -65,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiListItem-button:hover': {
       backgroundColor: '#c5dce8',
+      borderRadius: 58
     },
     '& .MuiAvatar-img': {
       objectFit: 'contain',
@@ -194,6 +199,15 @@ const twitterSearch= [{ title: 'Try searching for people, topics, or keywords' }
 
 const SideBar = (props) => {
   const classes = useStyles();
+  const [showChart, setShowChart] = useState(false)
+
+  const displayChart = () => {
+    setShowChart(true)
+  }
+
+const { logout } = useAuth()
+
+
   const drawer_two = (
 
     <div>
@@ -211,13 +225,14 @@ const SideBar = (props) => {
       />
   
       <TableContainer component={Paper}>
+        {showChart ? <TwitterChart/>: 
         <Table className={classes.table}  aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>
-              Trends For You
+              Tweets Per Day
             </TableCell>
-            <TableCell><SettingsIcon /></TableCell>
+            <TableCell><SettingsIcon onClick={displayChart} /></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -239,8 +254,12 @@ const SideBar = (props) => {
 
         </TableBody>
         </Table>
+}
   
       </TableContainer>
+      <Button onClick={logout()}>
+        Log Out
+      </Button>
     </div>
   );
 

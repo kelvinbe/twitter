@@ -10,17 +10,23 @@ import firebase from "../../firebase";
 import { useState, useEffect } from 'react';
 
 
+
 const TweetPage = () => {
   const [tweets, setTweet] = useState([])
+  const [newTweets, setNewTweets] = useState('')
+  const [initialTweets, setInitialTweets] = useState({id: '', tweet: ''})
+
   const ref = firebase.firestore().collection("tweet")
-  console.log('reffffff', ref)
 
-
+  const HandleNewTweets = (e) => {
+    e.preventDefault()
+    const value = e.target.value
+    setNewTweets(value)
+    }
 
   function getTweets() {
     ref.onSnapshot((querySnapShot) => {
       const items = []
-      console.log('itemssss', items)
       querySnapShot.forEach((doc) => {
         items.push(doc.data())
       })
@@ -34,23 +40,23 @@ const TweetPage = () => {
 
   const handleTweetsList = () => {
     const incomingTweets = tweets.map((tweet) => <Tweet tweets={tweet.tweet} key={tweet.id} />);
-    console.log('TweetsInHandleTweet', tweets)
     return incomingTweets;
   }
 
 
 
 
-  const postTweets = () => {
-    const tweets = [...this.state.tweets]
-    const tweet = this.state.newTweet;
-    this.setState({tweets})
-    
+  const PostTweets = () => {
+  const response = setInitialTweets({id: tweets.length++, tweet: newTweets})
+
+    ref.doc().set(initialTweets).catch((err) => {
+      console.log(err)
+    })  
   }
 
- const handleNewTweets = (e) => {
-    setTweet({ newTweet: e.target.value });
-  }
+
+
+
 
     return (
       <div>
@@ -59,9 +65,9 @@ const TweetPage = () => {
         </div>
         <div>
           <CreateTweet
-            tweetData={tweets.tweet}
-            onChange={handleNewTweets}
-            onClick={postTweets}
+            tweetData={newTweets}
+            onChange={HandleNewTweets}
+            onClick={PostTweets}
           />
         </div>
         <Divider />
