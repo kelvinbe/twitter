@@ -25,7 +25,11 @@ export default styles => ({
           justifyContent: 'center'
       },
       link: {
-        color: '#1b88c7'
+        color: '#1b88c7',
+      },
+      align: {
+        textAlign: 'center'
+
       }
 
 

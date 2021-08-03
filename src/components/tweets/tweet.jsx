@@ -49,17 +49,12 @@ class Tweet extends Component {
 
 render(){
 const {classes, tweets} = this.props
-console.log('tweetsInTweet', tweets)
-console.log('classesss', classes)
 
-  
   return (
     <div className={classes.root}>
       <Card>
         <CardHeader title='name'></CardHeader>
-        <CardContent
-          style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}
-        >
+        <CardContent style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}>
           <Avatar alt='Remy Sharp' src={profile} />
 
           <p style={{ marginLeft: '10px' }}>
