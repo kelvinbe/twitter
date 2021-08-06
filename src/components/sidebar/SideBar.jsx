@@ -23,13 +23,14 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import SettingsIcon from '@material-ui/icons/Settings';
 import TwitterChart from '../charts/apexChart';
 import { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
+import cx from 'classnames';
+import GoodJob from '../videos/gjob.mp4'
 
 
 
@@ -90,6 +91,9 @@ const useStyles = makeStyles((theme) => ({
       width: drawerWidth,
       flexShrink: 0,
     },
+    [theme.breakpoints.down('md')]: {
+      width: 100
+    },
   },
   appBar: {
     [theme.breakpoints.up('sm')]: {
@@ -117,8 +121,25 @@ const useStyles = makeStyles((theme) => ({
 
   table: {
     minWidth: 200,
+  },
+  drawerHidden: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    },
+  },
+  tweetsPerDay: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    color: '#0989f3',
+    fontSize: 20
+  },
+  lookingGoodVideo: {
+    objectFit: 'scaledown',
+    position: 'relative',
+    width: '100%'
   }
 }));
+
 
 const drawer = (
   <div>
@@ -181,7 +202,7 @@ const drawer = (
             <ListItemIcon>
               {index % 2 === 0 ? (
                 <Button variant='contained' color='primary'>
-                  Tweet
+                  Play Time
                 </Button>
               ) : null}
             </ListItemIcon>
@@ -201,9 +222,6 @@ const SideBar = (props) => {
   const classes = useStyles();
   const [showChart, setShowChart] = useState(false)
 
-  const displayChart = () => {
-    setShowChart(true)
-  }
 
 const { logout } = useAuth()
 
@@ -223,18 +241,18 @@ const { logout } = useAuth()
           />
         )}
       />
+            <div className={classes.tweetsPerDay}>
+            <div>
+              Tweets Per Day
+          </div>
+            <div><SettingsIcon onClick={() => setShowChart(!showChart)} /></div>
+            <div></div>
+            </div>
   
       <TableContainer component={Paper}>
         {showChart ? <TwitterChart/>: 
         <Table className={classes.table}  aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              Tweets Per Day
-            </TableCell>
-            <TableCell><SettingsIcon onClick={displayChart} /></TableCell>
-          </TableRow>
-        </TableHead>
+   
         <TableBody>
           <TableRow>
             <TableCell>Kikuyu</TableCell>
@@ -257,7 +275,12 @@ const { logout } = useAuth()
 }
   
       </TableContainer>
-      <Button onClick={logout()}>
+      {showChart && 
+      <video autoPlay loop className={classes.lookingGoodVideo} muted>
+          <source src={GoodJob} type="video/mp4"/>
+        </video>
+        }
+      <Button onClick={logout}>
         Log Out
       </Button>
     </div>
@@ -265,6 +288,7 @@ const { logout } = useAuth()
 
 
   const { window } = props;
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
   return (
@@ -275,7 +299,7 @@ const { logout } = useAuth()
         open
         anchor='left'
         classes={{
-          paper: classes.drawerPaper,
+          paper: cx(classes.drawerPaper,classes.drawerHidden),
           root: classes.root,
         }}
       >
@@ -298,7 +322,7 @@ const { logout } = useAuth()
           open
           anchor='right'
           classes={{
-            paper: classes.drawerPaper,
+            paper: cx(classes.drawerPaper,classes.drawerHidden),
             root: classes.root,
           }}
         >

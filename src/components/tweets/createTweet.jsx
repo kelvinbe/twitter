@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
@@ -52,13 +51,8 @@ const renderTweetButton = (onClick) => {
   );
 };
 
-const cardIconContent = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  paddingLeft: '59px',
-};
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiListItem-root': {
       width: '0%',
@@ -84,10 +78,25 @@ const useStyles = makeStyles({
     '& .MuiCard-root': {
     maxWidth: '50%',
     maxHeight: 232,
-    paddingLeft: '347px'
-    }
+    paddingLeft: '347px',
+    [theme.breakpoints.down('sm')]: {
+       paddingLeft: 0,
+       maxWidth: '100%',
+
+    },
+
+    },
+    
   },
-});
+  cardIconContent: {
+  display: 'flex',
+  justifyContent: 'space-between',
+  paddingLeft: '59px',
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: 0,
+ }
+  }
+}));
 
 const CreateTweet = (props) => {
   const {tweetData, onChange, onClick} = props
@@ -116,7 +125,7 @@ const CreateTweet = (props) => {
         </CardContent>
 
         <Divider />
-        <CardContent style={cardIconContent}>
+        <CardContent className={classes.cardIconContent}>
           {renderIcons()}
           {renderTweetButton(onClick)}
         </CardContent>

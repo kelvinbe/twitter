@@ -1,4 +1,4 @@
-export default styles => ({
+const styles = theme => ({
     root:{
             '& .MuiListItem-root': {
                 width: '0%',
@@ -17,7 +17,13 @@ export default styles => ({
             '& .MuiCard-root': {
                 maxWidth: '50%',
                 maxHeight: 232,
-                paddingLeft: '347px'
+                paddingLeft: '347px',
+                [theme.breakpoints.down('sm')]: {
+                    paddingLeft: 0,
+                    maxWidth: '100%',
+                     }
                 }
     }
 })
+
+export default styles

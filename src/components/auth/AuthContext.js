@@ -36,18 +36,12 @@ export function AuthProvider({ children }){
         return unsubscribe
     }, [])
 
-
-    
-
     const value = {
         currentUser,
         signup,
         login,
         logout
     }
-
-    
-
 return (
     <AuthContext.Provider value={value}>
         {!loading && children}

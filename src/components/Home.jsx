@@ -70,11 +70,6 @@ class Home extends Component {
     this.props.history.push(path);
   }
 
-
-
-
-    
-
   render() {
     const style = {
       display: 'flex',
@@ -92,8 +87,11 @@ class Home extends Component {
         <div className={classes.pageDivision}>
           <div className={classes.twitLogo}>
             <img src={down} className='twit-logo' />
+  
           </div>
+   
           <div className={classes.secondHalf}>
+
             <div style={{ paddingRight: '284px' }}>
               <img src={twitter} alt='twitter' className='twitter-logo' />
             </div>

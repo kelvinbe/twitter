@@ -41,5 +41,12 @@ export default styles => ({
     },
     progress: {
       
+    },
+    backVideo: {
+      objectFit: 'cover',
+      position: 'absolute',
+      width: '100%',
+      zIndex: '-1',
+      transform:'translate(-50%, -50%)'
     }
   });
