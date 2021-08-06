@@ -62,11 +62,9 @@ const TweetPage = () => {
   return setError('Nothing to tweet')
 
   }
-
-  //   ref.doc().set(initialTweets).catch((err) => {
-  //     console.log(err)
-  //   })  
-  // }
+    ref.doc().set(initialTweets).catch((err) => {
+      console.log(err)
+    })  
   }
 
     return (
