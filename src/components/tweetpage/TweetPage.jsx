@@ -8,13 +8,19 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './tweetPage.styles';
 import firebase from "../../firebase";
 import { useState, useEffect } from 'react';
+import MuiAlert from '@material-ui/lab/Alert';
 
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 const TweetPage = () => {
   const [tweets, setTweet] = useState([])
   const [newTweets, setNewTweets] = useState('')
   const [initialTweets, setInitialTweets] = useState({id: '', tweet: ''})
+  const [error, setError] = useState('')
 
   const ref = firebase.firestore().collection("tweet")
 
@@ -22,6 +28,11 @@ const TweetPage = () => {
     e.preventDefault()
     const value = e.target.value
     setNewTweets(value)
+    }
+
+
+    const handleClose = () => {
+      setError('')
     }
 
   function getTweets() {
@@ -43,23 +54,24 @@ const TweetPage = () => {
     return incomingTweets;
   }
 
-
-
-
   const PostTweets = () => {
   const response = setInitialTweets({id: tweets.length++, tweet: newTweets})
 
-    ref.doc().set(initialTweets).catch((err) => {
-      console.log(err)
-    })  
+  console.log('newTweet', newTweets)
+  if(newTweets === ''){
+  return setError('Nothing to tweet')
+
   }
 
-
-
-
+  //   ref.doc().set(initialTweets).catch((err) => {
+  //     console.log(err)
+  //   })  
+  // }
+  }
 
     return (
       <div>
+        
         <div>
           <SideBar />
         </div>
@@ -69,8 +81,12 @@ const TweetPage = () => {
             onChange={HandleNewTweets}
             onClick={PostTweets}
           />
+          
         </div>
         <Divider />
+        <div style={{width: 206, paddingLeft: 499}}>
+        {error && <Alert onClick={handleClose} severity="error">{error}</Alert>}
+        </div>
         <div>{handleTweetsList()}</div>
       </div>
     );

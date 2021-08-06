@@ -11,13 +11,13 @@ class TwitterChart extends Component {
           id: "basic-bar"
         },
         xaxis: {
-          categories: [1991, 1992, 1993]
+          categories: ['Mon', 'Tue', 'Wen', 'Thur', 'Fri']
         }
       },
       series: [
         {
-          name: "series-1",
-          data: [30, 40, 45]
+          name: "Tweets",
+          data: [30, 40, 45, 20, 10]
         }
       ]
     };
