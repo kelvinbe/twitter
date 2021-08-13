@@ -31,6 +31,15 @@ import { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import cx from 'classnames';
 import GoodJob from '../videos/gjob.mp4'
+import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import { DialogTitle } from '@material-ui/core';
+import shakes from '../../assests/shakes.jpg'
+import mwai from '../../assests/Mwai.jpg'
+import {dialogText} from './dialogText';
 
 
 
@@ -52,6 +61,8 @@ const avatarContent = {
 };
 
 const drawerWidth = 343;
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiTable-root': {
       backgroundColor: 'whitesmoke'
+    },
+    '& .MuiTableCell-root:hover': {
+      backgroundColor: '#dcdcdc',
     }
   },
   drawer: {
@@ -137,83 +151,21 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'scaledown',
     position: 'relative',
     width: '100%'
+  },
+  img: {
+    width: '135px;',
   }
 }));
 
 
-const drawer = (
-  <div>
-    <div>
-      <Divider />
-      <List>
-        {['TweetBird'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <img src={twitter} style={style} /> : null}
-            </ListItemIcon>
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        {['Home', 'Explore'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? (
-                <img src={home} style={style} />
-              ) : (
-                <img src={hash} style={style} />
-              )}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        {['Notifications', 'Messages'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? (
-                <img src={notifications} style={style} />
-              ) : (
-                <img src={message} style={style} />
-              )}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        {['Profile', 'More'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? (
-                <img src={profile} style={style} />
-              ) : (
-                <img src={more} style={style} />
-              )}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        {['Button'].map((text, index) => (
-          <ListItem key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? (
-                <Button variant='contained' color='primary'>
-                  Play Time
-                </Button>
-              ) : null}
-            </ListItemIcon>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  </div>
-);
 
-const twitterSearch= [{ title: 'Try searching for people, topics, or keywords' }];
+
+
+
+
+
+const twitterSearch = [{ title: 'Try searching for people, topics, or keywords' }];
+
 
 
 
@@ -221,13 +173,132 @@ const twitterSearch= [{ title: 'Try searching for people, topics, or keywords' }
 const SideBar = (props) => {
   const classes = useStyles();
   const [showChart, setShowChart] = useState(false)
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    window?.addEventListener("scroll", () => {
+      if (window?.pageYOffset > 300) {
+      }
+    });
+  }, []);
 
 
-const { logout } = useAuth()
+
+
+  const { logout } = useAuth()
+
+
+  const openDialog = () => {
+    console.log('opennnn', open)
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
+  const renderDialog = () => {
+    return (
+      <Dialog
+        open={open}
+        onClose={onClose}
+        aria-labelledby='form-dialog-title'
+        className={classes.root}
+      >
+        <DialogTitle>
+          <div>
+            <img src={shakes} alt='twitter' className={classes.img} />
+          </div>
+        </DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            <h3 style={{ color: 'black' }}>
+              {dialogText.ShakesSpear}
+            </h3>
+          </DialogContentText>
+
+        </DialogContent>
+      </Dialog>
+    )
+  }
+
+
+
+
+  const drawer = (
+    <div>
+      <div>
+        <Divider />
+        <List>
+          {['TweetBird'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <img src={twitter} style={style} /> : null}
+              </ListItemIcon>
+            </ListItem>
+          ))}
+        </List>
+        <List>
+          {['Home', 'Explore'].map((text, index) => (
+            <ListItem button key={text} onClick={() => ScrollToTop(text)}>
+              <ListItemIcon>
+                {index % 2 === 0 ? (
+                  <img src={home} style={style} />
+                ) : (
+                  <img src={hash} style={style} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <List>
+          {['Notifications', 'Messages'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? (
+                  <img src={notifications} style={style} />
+                ) : (
+                  <img src={message} style={style} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <List>
+          {['Profile', 'More'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? (
+                  <img src={profile} style={style} />
+                ) : (
+                  <img src={more} style={style} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <List>
+          {['Button'].map((text, index) => (
+            <ListItem key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? (
+                  <Button variant='contained' color='primary'>
+                    Play Time
+                  </Button>
+                ) : null}
+              </ListItemIcon>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    </div>
+  );
 
 
   const drawer_two = (
-
     <div>
       <Autocomplete
         freeSolo
@@ -241,65 +312,78 @@ const { logout } = useAuth()
           />
         )}
       />
-            <div className={classes.tweetsPerDay}>
-            <div>
-              Tweets Per Day
-          </div>
-            <div><SettingsIcon onClick={() => setShowChart(!showChart)} /></div>
-            <div></div>
-            </div>
-  
-      <TableContainer component={Paper}>
-        {showChart ? <TwitterChart/>: 
-        <Table className={classes.table}  aria-label="simple table">
-   
-        <TableBody>
-          <TableRow>
-            <TableCell>Kikuyu</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Rila Odinga</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Fred ngatia</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Yaya Toure</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Show more</TableCell>
-          </TableRow>
+      <div className={classes.tweetsPerDay}>
+        <div>
+          Tweets Per Day
+        </div>
+        <div><SettingsIcon onClick={() => setShowChart(!showChart)} /></div>
+        <div></div>
+      </div>
 
-        </TableBody>
-        </Table>
-}
-  
-      </TableContainer>
-      {showChart && 
-      <video autoPlay loop className={classes.lookingGoodVideo} muted>
-          <source src={GoodJob} type="video/mp4"/>
-        </video>
+      <TableContainer component={Paper}>
+        {showChart ? <TwitterChart /> :
+          <Table className={classes.table} aria-label="simple table">
+
+            <TableBody>
+              <TableRow>
+                <TableCell onClick={openDialog}>William Shakespear</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell onClick={openDialog}>Raila Odinga</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell onClick={openDialog}>Fred ngatia</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell onClick={openDialog}>Yaya Toure</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell onClick={openDialog}>Show more</TableCell>
+              </TableRow>
+
+            </TableBody>
+          </Table>
         }
+
+      </TableContainer>
+      {showChart &&
+        <video autoPlay loop className={classes.lookingGoodVideo} muted>
+          <source src={GoodJob} type="video/mp4" />
+        </video>
+      }
       <Button onClick={logout}>
         Log Out
       </Button>
     </div>
   );
 
+  const ScrollToTop = (text) => {
 
-  const { window } = props;
+    console.log('teaxtttt', text)
+    if (text === 'Home') {
+      window.scrollTo(0, 0)
+    }
+    if (text === 'Explore') {
+      console.log('exloreeeBefore', props.explore)
+      props.explore(true)
+    }
+  };
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+
+
+  const container = window !== undefined ? () => window().document.body : undefined;
   return (
     <div className={classes.root}>
+      <div>
+      {open && renderDialog()}
+      </div>
       <Drawer
         container={container}
         variant='permanent'
         open
         anchor='left'
         classes={{
-          paper: cx(classes.drawerPaper,classes.drawerHidden),
+          paper: cx(classes.drawerPaper, classes.drawerHidden),
           root: classes.root,
         }}
       >
@@ -322,7 +406,7 @@ const { logout } = useAuth()
           open
           anchor='right'
           classes={{
-            paper: cx(classes.drawerPaper,classes.drawerHidden),
+            paper: cx(classes.drawerPaper, classes.drawerHidden),
             root: classes.root,
           }}
         >
@@ -331,6 +415,12 @@ const { logout } = useAuth()
       </div>
     </div>
   );
+
+
 };
+
+
+
+
 
 export default SideBar;

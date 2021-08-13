@@ -11,10 +11,8 @@ import { Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import SendIcon from '@material-ui/icons/Send';
-import styles from './tweet.styles';
+import styles from './explore.styles';
 import { withStyles } from '@material-ui/core/styles';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-
 
 
 const style = {
@@ -22,67 +20,63 @@ const style = {
   color: 'lightgrey',
 };
 
-
-
-
-
-class Tweet extends Component {
-
-  state = {
-    liked: false
-  }
-
- 
-
-render(){
-const {classes, tweets} = this.props
-
-
-const like = () => {
-  this.setState({liked: !this.state.liked})
-};
-
 const icons = [
-  <ReplyIcon />,
-  <SendIcon className={classes.send}/>,
- this.state.liked ? <FavoriteIcon className={classes.filledFav} onClick={like}  /> :  <FavoriteBorderIcon className={classes.fav} onClick={like} />,
-  <ShareIcon />,
+  {title: 'Suadi Arabia', text: 'blaaa'},
+  {title: 'Ethiopia', text: 'blaaa'},
+  {title: 'Kenya', text: 'blaaa'},
+  {title: 'Yakuza', text: 'blaa'},
+  {title: 'Will Smith', text: 'baaa'},
+
 ];
+
+
 
 const renderIcons = () => {
   return (
-    <List
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-      }}
-    >
+    <div>
       {icons.map((icon, i) => (
-        <ListItem key={i}>{icon}</ListItem>
+        <Card key={i}>
+          <CardHeader title={icon.title}></CardHeader>
+        <CardContent style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}>
+          
+          {icon.text}
+          </CardContent>
+          <Divider />
+          </Card>
       ))}
-    </List>
+    </div>
   );
 };
+console.log('icons', renderIcons())
+
+
+
+
+class Explore extends Component {
+
+render(){
+const {classes} = this.props
 
   return (
     <div className={classes.root}>
       <Card>
         <CardHeader title='name'></CardHeader>
         <CardContent style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}>
-          <Avatar alt='Remy Sharp' src={profile} />
-
-          <p style={{ marginLeft: '10px' }}>
-            {tweets}
-          </p>
+        <iframe src="https://giphy.com/embed/gZEBpuOkPuydi" width="480" height="325" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/animation-animated-free-gZEBpuOkPuydi">Shall We Explore</a></p>
         </CardContent>
 
         <Divider />
-        <CardContent>{renderIcons()}</CardContent>
+        <CardContent className={classes.title}>Trends For You</CardContent>
+        <Divider />
+
+
       </Card>
+      {renderIcons()}
+      
     </div>
+    
   );
   }
 };
 
-export default withStyles(styles)(Tweet);
+export default withStyles(styles)(Explore);

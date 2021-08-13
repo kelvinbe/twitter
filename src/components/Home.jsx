@@ -15,12 +15,13 @@ import api from '../api';
 import moment from 'moment';
 
 
+
 class Home extends Component {
   state = {
     open: false,
     isLoading: false,
     name: '',
-    phone: '',
+    email: '',
     password: '',
     month: '',
     year: '',
@@ -44,7 +45,7 @@ class Home extends Component {
   };
 
   handlePhone = (e) => {
-    this.setState({ phone: e.target.value });
+    this.setState({ email: e.target.value });
   };
 
   handlePassword = (e) => {
@@ -128,16 +129,12 @@ class Home extends Component {
               {this.state.open && (
                 <div>
                   <SignUp
-                    handleYearChange = {this.handleYearChange}
-                    handleDayChange = {this.handleDayChange}
-                    handleMonthChange ={this.handleMonthChange}
-                    handleName={this.handleName}
-                    handlePassword={this.handlePassword}
-                    handlePhone={this.handlePhone}
-                    phone={this.state.phone}
+                    email={this.state.email}
                     password={this.state.password}
                     onClose={this.handleClose}
                     open={this.state.open}
+                    handlePhone={this.handlePhone}
+                    handlePassword={this.handlePassword}
                   />
                 </div>
               )}

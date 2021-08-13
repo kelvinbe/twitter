@@ -14,6 +14,8 @@ import { DialogTitle } from '@material-ui/core';
 import axios from 'axios';
 import Toolbar from '@material-ui/core/Toolbar';
 import { useAuth } from './AuthContext';
+import {useHistory} from 'react-router-dom'
+
 
 
 const useStyles = makeStyles({
@@ -57,29 +59,33 @@ export default function SignUp(props) {
     onClose,
     open,
     handlePassword,
-    handleName,
     handlePhone,
-    handleMonthChange,
-    handleYearChange,
-    handleDayChange,
     password,
-    phone
+    email
   } = props;
 
   const classes = useStyles();
 
   const { signup } = useAuth()
+  const history = useHistory()
+
   const [loading, setLoading] = useState(false)
 
+  console.log('passwordddd', password)
+  console.log('phoneeeeeee', email)
+
+
  const handleSignUp = async (e) => {
-   if(!password || !phone){
+   if(!password || !email){
     return alert('Missing fields!')
    }
   e.preventDefault()
 
   try{
     setLoading(true)
-   await signup(phone, password)
+   await signup(email, password)
+   history.push('/login')
+
 
   }catch{
   }
@@ -120,19 +126,12 @@ export default function SignUp(props) {
           </h2>
         </DialogContentText>
         <form className={classes.form}>
-          <TextField
-            fullWidth
-            id='outlined-helperText'
-            label='Name'
-            onChange={handleName}
-            variant='outlined'
-          />
 
           <TextField
             style={{ marginTop: '20px', marginBottom: '30px' }}
             fullWidth
             className={classes.root}
-            label='Phone'
+            label='Email'
             id='outlined-helperText'
             onChange={handlePhone}
             variant='outlined'
@@ -147,22 +146,6 @@ export default function SignUp(props) {
             type={'password'}
             onChange={handlePassword}
             variant='outlined'
-          />
-          <div>
-            <p style={{ color: '#1b88c7' }}>Use email instead</p>
-          </div>
-          <DialogContentText>
-            <p style={{ color: 'black' }}>
-              <b>Date of birth </b>
-              <br />
-              This will not be shown publicly. Confirm your own age, even if
-              this account is for a business, a pet, or something else.
-            </p>
-          </DialogContentText>
-          <DatePickers
-            handleMonth={handleMonthChange}
-            handleDay={handleDayChange}
-            handleYear={handleYearChange}
           />
         </form>
       </DialogContent>
