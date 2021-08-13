@@ -3,9 +3,11 @@ import Home from './components/Home'
 import {Route,Switch} from 'react-router-dom'
 import Login from './components/auth/Login'
 import TweetPage from './components/tweetpage/TweetPage'
+import Explore from '../src/components/explore/Explore'
 import {withRouter} from 'react-router-dom';
 import { AuthProvider } from './components/auth/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+
 
 
 
@@ -14,7 +16,9 @@ function App() {
     <AuthProvider>
     <div className="App">
      <Switch>
-     <PrivateRoute path="/tweetpage" component={TweetPage} /> 
+     <PrivateRoute path="/tweetpage" component={TweetPage} />
+     <PrivateRoute path="/notifications" component={Explore} />
+
      <Route path="/login" component={Login} /> 
      <Route path="/" exact component={Home} />
      </Switch>

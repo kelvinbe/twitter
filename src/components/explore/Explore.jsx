@@ -21,33 +21,17 @@ const style = {
 };
 
 const icons = [
-  {title: 'Suadi Arabia', text: 'blaaa'},
-  {title: 'Ethiopia', text: 'blaaa'},
-  {title: 'Kenya', text: 'blaaa'},
-  {title: 'Yakuza', text: 'blaa'},
-  {title: 'Will Smith', text: 'baaa'},
+  {title: 'Trending in Suadi Arabia', text: 'Sheria Law', tweets: '2001 Tweets'},
+  {title: 'Trending in Ethiopia', text: 'Safaricom', tweets: '32K Tweets'},
+  {title: 'Trending in Kenya', text: 'Fuliza', tweets: '50K Tweets'},
+  {title: 'Trending in Japan', text: 'Yakuza', tweets: '1000 Tweets'},
+  {title: 'Trending in USA', text: 'Will Smith', tweets: '60K Tweets'},
 
 ];
 
 
 
-const renderIcons = () => {
-  return (
-    <div>
-      {icons.map((icon, i) => (
-        <Card key={i}>
-          <CardHeader title={icon.title}></CardHeader>
-        <CardContent style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}>
-          
-          {icon.text}
-          </CardContent>
-          <Divider />
-          </Card>
-      ))}
-    </div>
-  );
-};
-console.log('icons', renderIcons())
+
 
 
 
@@ -56,6 +40,26 @@ class Explore extends Component {
 
 render(){
 const {classes} = this.props
+
+const renderIcons = () => {
+  return (
+    <div>
+      {icons.map((icon, i) => (
+        <Card key={i}>
+          <CardHeader title={icon.title}></CardHeader>
+        <CardContent style={{ display: 'flex', flexDirection: 'row'}}>
+          
+          {icon.text}
+          </CardContent>
+          <CardContent className={classes.bottom}>
+          {icon.tweets}
+          </CardContent>
+          <Divider />
+          </Card>
+      ))}
+    </div>
+  );
+};
 
   return (
     <div className={classes.root}>

@@ -21,10 +21,18 @@ const styles = theme => ({
                     paddingLeft: 0,
                     maxWidth: '100%',
                      }
-                }
+                },
+            '& .MuiTypography-h5': {
+                fontSize: '12px',
+                color: 'rgb(83, 100, 113)'
+            }
     },
     title: {
         textAlign: 'center'
+    },
+    bottom: {
+        fontSize: '12px',
+        color: 'rgb(83, 100, 113)'
     }
 })
 

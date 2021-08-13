@@ -43,6 +43,8 @@ import mwai from '../../assests/Mwai.jpg'
 import corona from '../../assests/corona.png'
 import machu from '../../assests/machu.jpg'
 import nothing from '../../assests/nothing.gif'
+import { withStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 
 import {dialogText} from './dialogText';
 
@@ -397,6 +399,12 @@ const SideBar = (props) => {
     </div>
   );
 
+  // const NextPath = (path) => {
+  //   let history = useHistory();
+  //   console.log('propsss', props)
+  //   history.push(path);
+  // }
+
   const ScrollToTop = (text) => {
 
     console.log('teaxtttt', text)
@@ -404,8 +412,10 @@ const SideBar = (props) => {
       window.scrollTo(0, 0)
     }
     if (text === 'Explore') {
-      console.log('exloreeeBefore', props.explore)
+      console.log('exloreeeBefore', props)
+      
       props.explore(true)
+      // NextPath('/notifications')
     }
   };
 
@@ -463,4 +473,4 @@ const SideBar = (props) => {
 
 
 
-export default SideBar;
+export default withStyles()(SideBar);
