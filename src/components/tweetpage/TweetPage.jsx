@@ -10,6 +10,7 @@ import firebase from "../../firebase";
 import { useState, useEffect } from 'react';
 import MuiAlert from '@material-ui/lab/Alert';
 import Explore from '../explore/Explore'
+import moment from 'moment';
 
 
 function Alert(props) {
@@ -20,9 +21,11 @@ function Alert(props) {
 const TweetPage = () => {
   const [tweets, setTweet] = useState([])
   const [newTweets, setNewTweets] = useState('')
-  const [initialTweets, setInitialTweets] = useState({id: '', tweet: ''})
+  const [initialTweets, setInitialTweets] = useState({id: '', tweet: '', createdAt: ''})
   const [error, setError] = useState('')
   const [explore, setExplore] = useState(false)
+
+  console.log('NOWWW', moment().utc)
 
 
   const ref = firebase.firestore().collection("tweet")
@@ -41,26 +44,18 @@ const TweetPage = () => {
   function getTweets() {
     ref.onSnapshot((querySnapShot) => {
       const items = []
+
+
       querySnapShot.forEach((doc) => {
         items.push(doc.data())
+        console.log('docData', doc.data())
       })
-      for(let i = 0; i < items.length; i++){
-        const cleanTweets = []
-        console.log('items', items[i])
-        if(Object.keys(items[i]).length === 0 || items[i].tweet === '' || items[i] === {}){
-          console.log('emptyyyyy', items[i])
-          console.log('indexOfEmpty', i)
-          items.splice(i, 1)
-          console.log('itemsss', items)
-          cleanTweets.push(items)
-          console.log('newTweets', cleanTweets)
-          setTweet(cleanTweets[0])
-        }
-
-      }
+     const cleanTweets = items.filter(item => !(item.id === undefined || item.tweet === ''))
+      setTweet(cleanTweets)
 
 
     })
+
   }
 
 
@@ -75,23 +70,22 @@ const TweetPage = () => {
 
 
   const handleTweetsList = () => {
-    const incomingTweets = tweets.map((tweet) => <Tweet tweets={tweet.tweet} key={tweet.id} />);
+    const incomingTweets = tweets.map((tweet) => <Tweet tweets={tweet.tweet} key={tweet.id}  />);
     return incomingTweets;
   }
 
   const PostTweets = () => {
-  const response = setInitialTweets({id: tweets.length++, tweet: newTweets})
 
-  console.log('newTweet', newTweets)
-  if(newTweets === ''){
-  return setError('Nothing to tweet')
+      setInitialTweets({id: tweets.length++, tweet: newTweets})
+      console.log('newTweet', newTweets)
+      if(newTweets === ''){
+          return setError('Nothing to tweet')
+        } 
+      console.log('newTweetsss', newTweets)
 
-  }
-
-  console.log('newTweetsss', newTweets)
-    ref.doc().set(initialTweets).catch((err) => {
-      console.log(err)
-    })  
+      ref.doc().set(initialTweets).catch((err) => {
+              console.log(err)
+            }) 
   }
 
   console.log('exploreeeEEEEE', explore)
