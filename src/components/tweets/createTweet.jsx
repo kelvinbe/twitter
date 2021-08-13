@@ -70,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
       padding: '10px 12px',
       borderRadius: 48,
       background: '#1b88c7',
-      height: 47,
+      height: 35,
+      marginRight: 10
     },
     '& .MuiAvatar-img': {
       objectFit: 'contain',

@@ -101,11 +101,23 @@ const useStyles = makeStyles((theme) => ({
       height: 73
     },
     '& .MuiTable-root': {
-      backgroundColor: 'whitesmoke'
+      backgroundColor: 'whitesmoke',
+      width: 300,
+      borderRadius: 33,
+      marginLeft: 20
     },
     '& .MuiTableCell-root:hover': {
       backgroundColor: '#dcdcdc',
-    }
+    },
+  '& .MuiTableCell-root': {
+    borderBottom: 'none'
+  },
+  '& .MuiPaper-elevation1': {
+    boxShadow: 'none'
+  }
+
+
+
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -152,7 +164,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     color: '#0989f3',
-    fontSize: 20
+    fontSize: 20,
+    marginLeft: 36
   },
   lookingGoodVideo: {
     objectFit: 'scaledown',
@@ -163,12 +176,6 @@ const useStyles = makeStyles((theme) => ({
     width: '200px;',
   }
 }));
-
-
-
-
-
-
 
 
 const twitterSearch = [{ title: 'Try searching for people, topics, or keywords' }];
@@ -185,15 +192,9 @@ const SideBar = (props) => {
     });
   }, []);
 
-
-
-
   const { logout } = useAuth()
 
-
   const openDialog = (value) => {
-    console.log('opennnn', open)
-    console.log('valueeeeee', value)
     setDialog(value)
     setOpen(true)
   }
@@ -227,8 +228,7 @@ const SideBar = (props) => {
       return dialogText.MwaiKibaki
     }
     else if(showDialog === 'corona'){
-      return <video autoPlay loop className={classes.lookingGoodVideo} muted>
-        <source src={Covid} type="video/mp4" /></video>
+      return <video autoPlay loop className={classes.lookingGoodVideo} muted><source src={Covid} type="video/mp4" /></video>
     }
     else if(showDialog === 'machu'){
       return dialogText.Machu
@@ -359,6 +359,7 @@ const SideBar = (props) => {
       <Autocomplete
         freeSolo
         options={twitterSearch.map((option) => option.title)}
+        style={{marginLeft: 20}}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -407,9 +408,12 @@ const SideBar = (props) => {
           <source src={GoodJob} type="video/mp4" />
         </video>
       }
+      <div style={{marginTop: 20, marginLeft: 35}}>
       <Button onClick={logout}>
         Log Out
       </Button>
+      </div>
+      
     </div>
   );
 

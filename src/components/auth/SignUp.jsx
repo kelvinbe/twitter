@@ -141,7 +141,7 @@ export default function SignUp(props) {
             style={{ marginTop: '20px', marginBottom: '30px' }}
             fullWidth
             className={classes.root}
-            label='Passoword'
+            label='Password'
             id='outlined-helperText'
             type={'password'}
             onChange={handlePassword}
