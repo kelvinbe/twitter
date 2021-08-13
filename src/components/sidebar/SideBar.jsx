@@ -238,6 +238,20 @@ const SideBar = (props) => {
     }
   }
 
+ 
+
+  const ScrollToTop = (text) => {
+    if (text === 'Home') {
+      window.scrollTo(0, 0)
+      props.explore(false)
+
+    }
+    if (text === 'Explore') {
+      console.log('exloreeeBefore', props)
+      props.explore(true)
+    }
+  };
+
   const renderDialog = () => {
     return (
       <Dialog
@@ -399,25 +413,7 @@ const SideBar = (props) => {
     </div>
   );
 
-  // const NextPath = (path) => {
-  //   let history = useHistory();
-  //   console.log('propsss', props)
-  //   history.push(path);
-  // }
 
-  const ScrollToTop = (text) => {
-
-    console.log('teaxtttt', text)
-    if (text === 'Home') {
-      window.scrollTo(0, 0)
-    }
-    if (text === 'Explore') {
-      console.log('exloreeeBefore', props)
-      
-      props.explore(true)
-      // NextPath('/notifications')
-    }
-  };
 
 
 

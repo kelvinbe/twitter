@@ -30,12 +30,6 @@ const icons = [
 ];
 
 
-
-
-
-
-
-
 class Explore extends Component {
 
 render(){
@@ -64,7 +58,7 @@ const renderIcons = () => {
   return (
     <div className={classes.root}>
       <Card>
-        <CardHeader title='name'></CardHeader>
+        <CardHeader></CardHeader>
         <CardContent style={{ display: 'flex', flexDirection: 'row', marginLeft: '10px' }}>
         <iframe src="https://giphy.com/embed/gZEBpuOkPuydi" width="480" height="325" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/animation-animated-free-gZEBpuOkPuydi">Shall We Explore</a></p>
         </CardContent>
