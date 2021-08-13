@@ -25,12 +25,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import SettingsIcon from '@material-ui/icons/Settings';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import TwitterChart from '../charts/apexChart';
 import { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import cx from 'classnames';
 import GoodJob from '../videos/gjob.mp4'
+import Covid from '../videos/covid.mp4'
 import { Link } from "react-router-dom";
 import { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
@@ -39,6 +40,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import { DialogTitle } from '@material-ui/core';
 import shakes from '../../assests/shakes.jpg'
 import mwai from '../../assests/Mwai.jpg'
+import corona from '../../assests/corona.png'
+import machu from '../../assests/machu.jpg'
+import nothing from '../../assests/nothing.gif'
+
 import {dialogText} from './dialogText';
 
 
@@ -153,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   img: {
-    width: '135px;',
+    width: '200px;',
   }
 }));
 
@@ -166,14 +171,11 @@ const useStyles = makeStyles((theme) => ({
 
 const twitterSearch = [{ title: 'Try searching for people, topics, or keywords' }];
 
-
-
-
-
 const SideBar = (props) => {
   const classes = useStyles();
   const [showChart, setShowChart] = useState(false)
   const [open, setOpen] = useState(false)
+  const [showDialog, setDialog] = useState('')
   useEffect(() => {
     window?.addEventListener("scroll", () => {
       if (window?.pageYOffset > 300) {
@@ -187,13 +189,51 @@ const SideBar = (props) => {
   const { logout } = useAuth()
 
 
-  const openDialog = () => {
+  const openDialog = (value) => {
     console.log('opennnn', open)
+    console.log('valueeeeee', value)
+    setDialog(value)
     setOpen(true)
   }
 
   const onClose = () => {
     setOpen(false)
+  }
+
+  const imageCheck = () => {
+    if(showDialog === 'shakes'){
+      return <img src={shakes} alt='twitter' className={classes.img} />
+    } else if(showDialog === 'mwai'){
+      return <img src={mwai} alt='twitter' className={classes.img} />
+    }
+    else if(showDialog === 'corona'){
+      return <img src={corona} alt='twitter' className={classes.img} />
+    }
+    else if(showDialog === 'machu'){
+      return <img src={machu} alt='twitter' className={classes.img} />
+    }
+    else{
+      return ('Nothing more to see here' && <img src={nothing} alt='twitter' />)
+    }
+
+  }
+
+  const dialogCheck = () => {
+    if(showDialog === 'shakes'){
+      return dialogText.ShakesSpear
+    } else if(showDialog === 'mwai'){
+      return dialogText.MwaiKibaki
+    }
+    else if(showDialog === 'corona'){
+      return <video autoPlay loop className={classes.lookingGoodVideo} muted>
+        <source src={Covid} type="video/mp4" /></video>
+    }
+    else if(showDialog === 'machu'){
+      return dialogText.Machu
+    }
+    else{
+      return 'Nothing more to see here folks, keep it moving'
+    }
   }
 
   const renderDialog = () => {
@@ -206,14 +246,14 @@ const SideBar = (props) => {
       >
         <DialogTitle>
           <div>
-            <img src={shakes} alt='twitter' className={classes.img} />
+            {imageCheck()}
           </div>
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
             <h3 style={{ color: 'black' }}>
-              {dialogText.ShakesSpear}
+              {dialogCheck()}
             </h3>
           </DialogContentText>
 
@@ -316,7 +356,7 @@ const SideBar = (props) => {
         <div>
           Tweets Per Day
         </div>
-        <div><SettingsIcon onClick={() => setShowChart(!showChart)} /></div>
+        <div><AutorenewIcon onClick={() => setShowChart(!showChart)} /></div>
         <div></div>
       </div>
 
@@ -326,16 +366,16 @@ const SideBar = (props) => {
 
             <TableBody>
               <TableRow>
-                <TableCell onClick={openDialog}>William Shakespear</TableCell>
+                <TableCell onClick={() => openDialog('shakes')}>William Shakespear</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell onClick={openDialog}>Raila Odinga</TableCell>
+                <TableCell onClick={() => openDialog('mwai')}>Mwai Kibaki</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell onClick={openDialog}>Fred ngatia</TableCell>
+                <TableCell onClick={() => openDialog('corona')}>Corona Prevention</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell onClick={openDialog}>Yaya Toure</TableCell>
+                <TableCell onClick={() => openDialog('machu')}>Machu Picchu</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell onClick={openDialog}>Show more</TableCell>
