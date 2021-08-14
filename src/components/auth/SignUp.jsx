@@ -79,6 +79,10 @@ export default function SignUp(props) {
    if(!password || !email){
     return alert('Missing fields!')
    }
+
+   if(password.length < 6){
+     return alert('password cant be less than 6 characters')
+   }
   e.preventDefault()
 
   try{
@@ -145,6 +149,7 @@ export default function SignUp(props) {
             id='outlined-helperText'
             type={'password'}
             onChange={handlePassword}
+            required
             variant='outlined'
           />
         </form>

@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
   },
   '& .MuiPaper-elevation1': {
     boxShadow: 'none'
+  },
+  '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input':{
+    padding: '3.5px 4px'
   }
 
 
